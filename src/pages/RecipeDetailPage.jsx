@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetchRecipes";
 import { fetchSingleRecipe } from "../services/recipeService";
 
-const RecipeDetailPage = () => {
+const RecipeDetailPage = ({ onSearch, searchTerm }) => {
   let { recipeId } = useParams();
   const navigate = useNavigate();
 
@@ -12,6 +12,11 @@ const RecipeDetailPage = () => {
     loading,
     error,
   } = useFetch(fetchSingleRecipe, [recipeId]);
+
+  useEffect(() => {
+    console.log("Resetting search term...", searchTerm);
+    onSearch(""); // Attempt to reset
+  }, [onSearch, recipeId]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error fetching data!</p>;

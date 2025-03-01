@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import CartPage from "./cartPage";
-import Header from "../Components/Header";
+
 import ProductList from "./ProductList";
 
-const Home = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+const Home = ({ searchTerm }) => {
   return (
     <div>
-      <Header onSearch={setSearchTerm} />
       <ProductList searchTerm={searchTerm} />
       {/* <CartPage /> */}
     </div>

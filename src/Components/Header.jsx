@@ -1,24 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import useFetch from "../hooks/useFetchRecipes";
-import { fetchSearchResults } from "../services/recipeService";
-const Header = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState("");
-
+const Header = ({ searchTerm, onSearch }) => {
+  console.log("Header rendered with searchTerm:", searchTerm);
   const handleChange = (e) => {
-    setSearchTerm(e.target.value);
     onSearch(e.target.value);
   };
-
-  const { data, loading, error } = useFetch(
-    fetchSearchResults,
-    [searchTerm],
-    [searchTerm]
-  );
-
-  const recipes = data?.recipes || [];
-
-  console.log(recipes, "from Header");
 
   return (
     <div className="font-poppins m-5 ml-auto flex justify-between">
