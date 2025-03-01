@@ -85,9 +85,9 @@ const ProductList = ({ searchTerm }) => {
             pageRangeDisplayed={3}
             onPageChange={handlePageClick}
             forcePage={page - 1}
+            activeClassName="bg-[crimson] text-white"
             containerClassName="flex items-center space-x-2"
             pageClassName="px-3 py-1 border rounded-md cursor-pointer"
-            activeClassName="bg-blue-500 text-white"
             previousClassName="px-3 py-1 border rounded-md cursor-pointer"
             nextClassName="px-3 py-1 border rounded-md cursor-pointer"
             disabledClassName="opacity-50 cursor-not-allowed"
