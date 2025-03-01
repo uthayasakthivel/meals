@@ -2,6 +2,7 @@ import React from "react";
 import { fetchRecipes } from "../services/recipeService";
 import useFetch from "../hooks/useFetchRecipes";
 import Header from "../Components/Header";
+import { Link } from "react-router";
 
 const ProductPage = () => {
   const { data, loading, error } = useFetch(fetchRecipes);
@@ -27,7 +28,7 @@ const ProductPage = () => {
                 <p className="text-gray-400">{recipe.cuisine}</p>
 
                 <button className="bg-[crimson] text-amber-50 px-3 py-1 rounded-2xl hover:bg-[forestgreen] transition duration-300 cursor-pointer">
-                  Let’s Cook!
+                  <Link to={`recipeDetails/${recipe.id}`}> Let’s Cook!</Link>
                 </button>
               </div>
             </div>
