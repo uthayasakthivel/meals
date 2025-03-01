@@ -49,7 +49,7 @@ const ProductList = ({ searchTerm }) => {
           </div>
         </div>
       ) : (
-        <ul className="grid grid-cols-4 gap-4 ">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-3">
           {recipes?.map((recipe) => (
             <li key={recipe.id} className="aspect-[16/14] flex flex-col">
               <div className="flex-1 overflow-hidden">
@@ -63,7 +63,6 @@ const ProductList = ({ searchTerm }) => {
                 <strong>{recipe.name}</strong>
                 <div className="flex justify-between items-center mt-2">
                   <p className="text-gray-400">{recipe.cuisine}</p>
-
                   <button className="bg-[crimson] text-amber-50 px-3 py-1 rounded-2xl hover:bg-[forestgreen] transition duration-300 cursor-pointer">
                     <Link to={`recipeDetails/${recipe.id}`}> Let’s Cook!</Link>
                   </button>
@@ -86,10 +85,11 @@ const ProductList = ({ searchTerm }) => {
             onPageChange={handlePageClick}
             forcePage={page - 1}
             activeClassName="bg-[crimson] text-white"
-            containerClassName="flex items-center space-x-2"
-            pageClassName="px-3 py-1 border rounded-md cursor-pointer"
-            previousClassName="px-3 py-1 border rounded-md cursor-pointer"
-            nextClassName="px-3 py-1 border rounded-md cursor-pointer"
+            containerClassName="flex flex-wrap justify-center gap-2 sm:gap-4"
+            pageClassName="px-3 py-1 border rounded-md cursor-pointer text-sm sm:text-base"
+            activeClassName="bg-[crimson] text-white"
+            previousClassName="px-3 py-1 border rounded-md cursor-pointer text-sm sm:text-base"
+            nextClassName="px-3 py-1 border rounded-md cursor-pointer text-sm sm:text-base"
             disabledClassName="opacity-50 cursor-not-allowed"
           />
         </div>

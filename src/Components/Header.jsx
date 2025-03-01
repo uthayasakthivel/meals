@@ -20,11 +20,11 @@ const Header = ({ searchTerm, onSearch }) => {
   };
 
   return (
-    <div className="font-poppins m-5 ml-auto flex justify-between">
+    <div className="font-poppins m-5 px-3 ml-auto flex flex-col sm:flex-row justify-between items-center text-center">
       <h2 className="text-3xl">
         The Ultimate <span className="font-bold">Cookbook</span>
       </h2>
-      <div className="flex items-center border-amber-100 border-b-2 rounded-2xl px-4">
+      <div className="flex items-center border-amber-100 border-b-2 rounded-2xl px-4 mt-3 sm:mt-0">
         <input
           type="text"
           placeholder="Search Recipes..."
