@@ -20,9 +20,15 @@ export const fetchSingleRecipe = async (recipeId) => {
   }
 };
 
-export const fetchSearchResults = async (query) => {
+export const fetchSearchResults = async (query = "", limit = 8, page = 1) => {
   try {
-    const response = await recipeApi.get(`/search?q=${query}`);
+    const skip = (page - 1) * limit;
+
+    const endpoint = query.trim()
+      ? `/search?q=${query}&limit=${limit}&skip=${skip}&select=name,image,cuisine`
+      : `?limit=${limit}&skip=${skip}&select=name,image,cuisine`;
+
+    const response = await recipeApi.get(endpoint);
     console.log(`data from service`, response.data);
     return response.data;
   } catch (error) {

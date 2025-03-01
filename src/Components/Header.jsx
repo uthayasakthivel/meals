@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 const Header = ({ searchTerm, onSearch }) => {
-  console.log("Header rendered with searchTerm:", searchTerm);
   const handleChange = (e) => {
     onSearch(e.target.value);
   };

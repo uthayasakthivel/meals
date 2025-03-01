@@ -1,15 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { fetchSearchResults } from "../services/recipeService";
 import useFetch from "../hooks/useFetchRecipes";
+import ReactPaginate from "react-paginate";
 
 const ProductList = ({ searchTerm }) => {
+  const [page, setPage] = useState(1);
+  const limit = 8;
+
   const { data, loading, error } = useFetch(
     fetchSearchResults,
-    [searchTerm],
-    [searchTerm]
+    [searchTerm, limit, page],
+    [searchTerm, limit, page]
   );
+
   const recipes = data?.recipes || [];
+  const totalItems = data?.total || 0;
+
+  // console.log(totalItems, "totalItems");
+
+  const pageCount = Math.ceil(totalItems / limit);
+  // console.log(limit, "limit");
+  // console.log(pageCount, "pageCount");
+  console.log(page, "current page");
+
+  const handlePageClick = ({ selected }) => {
+    setPage((prevPage) => {
+      console.log("Previous Page:", prevPage);
+      console.log("Updating to:", selected + 1);
+      return selected + 1;
+    });
+  };
+
+  useEffect(() => {
+    console.log("Updated page:", page);
+  }, [page]);
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error fetching data!</p>;
 
@@ -46,6 +72,27 @@ const ProductList = ({ searchTerm }) => {
             </li>
           ))}
         </ul>
+      )}
+
+      {pageCount > 1 && (
+        <div className="flex justify-center mt-6">
+          <ReactPaginate
+            previousLabel={"← Previous"}
+            nextLabel={"Next →"}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            forcePage={page - 1}
+            containerClassName="flex items-center space-x-2"
+            pageClassName="px-3 py-1 border rounded-md cursor-pointer"
+            activeClassName="bg-blue-500 text-white"
+            previousClassName="px-3 py-1 border rounded-md cursor-pointer"
+            nextClassName="px-3 py-1 border rounded-md cursor-pointer"
+            disabledClassName="opacity-50 cursor-not-allowed"
+          />
+        </div>
       )}
     </>
   );

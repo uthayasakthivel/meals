@@ -6,20 +6,33 @@ const useFetch = (fetchFunction, args = [], dependencies = []) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
     const getData = async () => {
       try {
         const result = await fetchFunction(...args);
-        console.log(result, "result");
-        setData(result);
+        if (isMounted) {
+          setData(result);
+          setError(null);
+        }
       } catch (err) {
-        setError(err);
+        if (isMounted) {
+          setError(err);
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     getData();
-  }, [fetchFunction, ...dependencies]);
+
+    return () => {
+      isMounted = false; // Cleanup function to prevent state update on unmount
+    };
+  }, [fetchFunction, ...dependencies, ...args]);
 
   return { data, loading, error };
 };
