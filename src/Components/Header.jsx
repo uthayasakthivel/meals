@@ -1,8 +1,22 @@
-import React, { useState } from "react";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import React, { useState, useCallback } from "react";
+
 const Header = ({ searchTerm, onSearch }) => {
+  const [inputValue, setInputValue] = useState(searchTerm);
+
+  const debounce = (cb, delay) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => cb(...args), delay);
+    };
+  };
+
+  // Memoize the debounced function
+  const debouncedSearch = useCallback(debounce(onSearch, 1000), [onSearch]);
+
   const handleChange = (e) => {
-    onSearch(e.target.value);
+    setInputValue(e.target.value); // Update local state immediately
+    debouncedSearch(e.target.value); // Delay API call
   };
 
   return (
@@ -10,15 +24,14 @@ const Header = ({ searchTerm, onSearch }) => {
       <h2 className="text-3xl">
         The Ultimate <span className="font-bold">Cookbook</span>
       </h2>
-      <div className="flex items-center border-amber-100 border-b-2 rounded-2xl px-4 ">
+      <div className="flex items-center border-amber-100 border-b-2 rounded-2xl px-4">
         <input
           type="text"
           placeholder="Search Recipes..."
           className="outline-0 border-0"
           onChange={handleChange}
-          value={searchTerm}
+          value={inputValue}
         />
-        <MagnifyingGlassIcon className="h-6 w-6 text-gray-500 cursor-pointer" />
       </div>
     </div>
   );
