@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useFetch = (fetchFunction) => {
+const useFetch = (fetchFunction, args = [], dependencies = []) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -8,7 +8,8 @@ const useFetch = (fetchFunction) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const result = await fetchFunction();
+        const result = await fetchFunction(...args);
+        console.log(result, "result");
         setData(result);
       } catch (err) {
         setError(err);
@@ -18,7 +19,7 @@ const useFetch = (fetchFunction) => {
     };
 
     getData();
-  }, [fetchFunction]);
+  }, [fetchFunction, ...dependencies]);
 
   return { data, loading, error };
 };

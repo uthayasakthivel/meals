@@ -1,52 +1,20 @@
 import { useParams, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import useFetch from "../hooks/useFetchRecipes";
+import { fetchSingleRecipe } from "../services/recipeService";
 
 const RecipeDetailPage = () => {
   let { recipeId } = useParams();
   const navigate = useNavigate();
 
-  // Sample API call simulation (Replace this with actual API fetch)
-  const [recipe, setRecipe] = useState(null);
+  const {
+    data: recipe,
+    loading,
+    error,
+  } = useFetch(fetchSingleRecipe, [recipeId]);
 
-  useEffect(() => {
-    // Mock data for demonstration (Replace with actual API call)
-    const mockData = {
-      id: recipeId,
-      name: "Classic Margherita Pizza",
-      ingredients: [
-        "Pizza dough",
-        "Tomato sauce",
-        "Fresh mozzarella cheese",
-        "Fresh basil leaves",
-        "Olive oil",
-        "Salt and pepper to taste",
-      ],
-      instructions: [
-        "Preheat the oven to 475°F (245°C).",
-        "Roll out the pizza dough and spread tomato sauce evenly.",
-        "Top with slices of fresh mozzarella and fresh basil leaves.",
-        "Drizzle with olive oil and season with salt and pepper.",
-        "Bake in the preheated oven for 12-15 minutes or until the crust is golden brown.",
-        "Slice and serve hot.",
-      ],
-      prepTimeMinutes: 20,
-      cookTimeMinutes: 15,
-      servings: 4,
-      difficulty: "Easy",
-      cuisine: "Italian",
-      caloriesPerServing: 300,
-      tags: ["Pizza", "Italian"],
-      image: "https://cdn.dummyjson.com/recipe-images/1.webp",
-      rating: 4.6,
-      reviewCount: 98,
-    };
-
-    setRecipe(mockData);
-  }, [recipeId]);
-
-  if (!recipe) {
-    return <div className="text-center text-lg mt-10">Loading...</div>;
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error fetching data!</p>;
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-xl mt-10">
