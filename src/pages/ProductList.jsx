@@ -87,7 +87,6 @@ const ProductList = ({ searchTerm }) => {
             activeClassName="bg-[crimson] text-white"
             containerClassName="flex flex-wrap justify-center gap-2 sm:gap-4"
             pageClassName="px-3 py-1 border rounded-md cursor-pointer text-sm sm:text-base"
-            activeClassName="bg-[crimson] text-white"
             previousClassName="px-3 py-1 border rounded-md cursor-pointer text-sm sm:text-base"
             nextClassName="px-3 py-1 border rounded-md cursor-pointer text-sm sm:text-base"
             disabledClassName="opacity-50 cursor-not-allowed"
